@@ -14,7 +14,7 @@ module Kauplus
   class Config
     include Singleton
   
-    attr_accessor :api_key, :raise_errors
+    attr_accessor :api_key, :process_response
     
     #
     # Private methods.
@@ -32,7 +32,7 @@ module Kauplus
       end
       conf = File.exists?(path) ? YAML.load_file(path)[env] : {}
       self.api_key = conf['api_key']
-      self.raise_errors = conf['raise_errors'] || false
+      self.process_response = conf['process_response'] || true
     end
   
   end

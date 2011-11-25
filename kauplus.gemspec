@@ -20,5 +20,5 @@ Gem::Specification.new do |s|
 
   # dependencies
   s.add_dependency 'rest-client', '>= 1.6.6'
-  s.add_dependency 'active_support', '>= 3.1.0'
+  s.add_dependency 'activesupport', '>= 3.1.0'
 end

@@ -104,9 +104,17 @@ module Kauplus
     # Raises a Kauplus::Error if the response is invalid and raise errors is active.
     #
     def self.parse_json body
-      parsed_response = JSON.load(body).symbolize_keys
-      if Kauplus.config.raise_errors and parsed_response[:code].to_s[0] != '6'
-        raise Kauplus::Error.new(:code => parsed_response[:code], :error => parsed_response[:error], :messages => parsed_response[:messages])
+      parsed_response = JSON.load(body)
+      if Kauplus.config.process_response
+        if parsed_response['code'].to_s[0] == '6'
+          parsed_response = parsed_response['data']
+        else
+          raise Kauplus::Error.new(
+                    :code => parsed_response['code'],
+                    :error => parsed_response['error'],
+                    :messages => parsed_response['messages']
+                    )
+        end
       end
       parsed_response
     end

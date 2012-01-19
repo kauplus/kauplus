@@ -45,15 +45,15 @@ module Kauplus
     # and parses the json response.
     #
     def self.post(resource_method, payload)
-      parse_json RestClient.post(url_for_resource_method(resource_method), payload.to_query)
-    end
-    
-    #
-    # Sends an HTTP MULTIPART POST Request to the Kauplus Web Services
-    # and parses the json response.
-    #
-    def self.multipart_post(resource_method, payload)
-      self.post(resource_method, payload.merge(:multipart => true))
+      begin
+        params = Params.generate(payload)
+        puts "Beggining post with params: "
+        parse_json RestClient.post(url_for_resource_method(resource_method), params)        
+      rescue Exception => ex
+        puts "Erro na gem Kauplus (open-source)"
+        puts ex.message
+        puts ex.backtrace[0..3]
+      end
     end
 
     #
@@ -61,7 +61,15 @@ module Kauplus
     # and parses the json response.
     #
     def self.put(resource_method, payload)
-      parse_json RestClient.put(url_for_resource_method(resource_method), payload.to_query)
+      begin
+        params = Params.generate(payload)
+        puts "Beggining put with params: "
+        parse_json RestClient.put(url_for_resource_method(resource_method), params)      
+      rescue Exception => ex
+        puts "Erro na gem Kauplus (open-source)"
+        puts ex.message
+        puts ex.backtrace[0..3]
+      end
     end
 
     #
@@ -96,7 +104,8 @@ module Kauplus
     # Returns the URL for consuming a specific resource_method.
     #
     def self.url_for_resource_method(resource_method)
-      "https://shop.kauplus.com.br/#{resource_method}"
+      # "https://shop.kauplus.com.br/#{resource_method}"
+      "http://localhost:3011/#{resource_method}" # TODO: change back      
     end
     
     #

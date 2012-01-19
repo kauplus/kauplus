@@ -5,5 +5,7 @@ require 'kauplus/constants'
 require 'kauplus/error'
 require "kauplus/version"
 
+puts "ha!!!"
+
 module Kauplus
 end

@@ -88,8 +88,7 @@ module Kauplus
     # Returns the URL for consuming a specific resource_method.
     #
     def self.url_for_resource_method(resource_method)
-      # "https://shop.kauplus.com.br/#{resource_method}"
-      "http://localhost:3011/#{resource_method}" # TODO: change back      
+      "https://shop.kauplus.com.br/#{resource_method}"     
     end
     
     #

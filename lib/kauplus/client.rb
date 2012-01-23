@@ -45,15 +45,7 @@ module Kauplus
     # and parses the json response.
     #
     def self.post(resource_method, payload)
-      begin
-        params = Params.generate(payload)
-        puts "Beggining post with params: "
-        parse_json RestClient.post(url_for_resource_method(resource_method), params)        
-      rescue Exception => ex
-        puts "Erro na gem Kauplus (open-source)"
-        puts ex.message
-        puts ex.backtrace[0..3]
-      end
+      parse_json RestClient.post(url_for_resource_method(resource_method), Params.generate(payload))        
     end
 
     #
@@ -61,15 +53,7 @@ module Kauplus
     # and parses the json response.
     #
     def self.put(resource_method, payload)
-      begin
-        params = Params.generate(payload)
-        puts "Beggining put with params: "
-        parse_json RestClient.put(url_for_resource_method(resource_method), params)      
-      rescue Exception => ex
-        puts "Erro na gem Kauplus (open-source)"
-        puts ex.message
-        puts ex.backtrace[0..3]
-      end
+      parse_json RestClient.put(url_for_resource_method(resource_method), Params.generate(payload))
     end
 
     #
@@ -116,7 +100,11 @@ module Kauplus
       parsed_response = JSON.load(body)
       if Kauplus.config.process_response
         if parsed_response['code'].to_s[0] == '6'
-          parsed_response = parsed_response['data']
+          if parsed_response['summary']
+            parsed_response = {'data' => parsed_response['data'], 'summary' => parsed_response['summary']}
+          else
+            parsed_response = parsed_response['data']
+          end
         else
           raise Kauplus::Error.new(
                     :code => parsed_response['code'],

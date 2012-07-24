@@ -22,7 +22,7 @@ module Kauplus
       payload.to_query.split('&').each do |key_value|
         unless key_value.blank?
           key, value = key_value.split('=')
-          index = values.find_index{|v| v.to_query(nil).split('=')[1] == value}
+          index = values.find_index{|v| v.to_query('').split('=')[1] == value}
           if index
             parameters << [URI.unescape(key), values.delete_at(index)]
           else

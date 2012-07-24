@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # dependencies
-  s.add_dependency 'rest-client', '>= 1.6.6'
+  s.add_dependency 'rest-client', '>= 1.6.7'
   s.add_dependency 'activesupport', '>= 3.1.0'
 end
